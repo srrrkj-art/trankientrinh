@@ -1,28 +1,112 @@
-<!DOCTYPE html><html lang="vi">
+<!DOCTYPE html>
+<html lang="vi">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Viền Giải Phóng Miền Nam 30/4</title>
+
 <style>
 body{margin:0;font-family:Arial,sans-serif;background:#f8f8f8;color:#222}
 .wrap{max-width:1100px;margin:auto;padding:20px}
-.hero,.panel{background:#fff;border-radius:22px;padding:18px;box-shadow:0 10px 24px rgba(0,0,0,.08)}
+
+.hero,.panel{
+  background:#fff;
+  border-radius:22px;
+  padding:18px;
+  box-shadow:0 10px 24px rgba(0,0,0,.08)
+}
+
 h1{margin:0;color:#c62828}
 .sub{color:#666}
+
 .grid{display:grid;grid-template-columns:1fr 360px;gap:18px}
-.stage{position:relative;aspect-ratio:1/1;border-radius:50%;overflow:hidden;background:#eee}
-.photo{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;transition:.2s}
-.frame{position:absolute;inset:0;width:100%;height:100%;pointer-events:none}
-.btn,input{width:100%;padding:12px;border-radius:14px;border:1px solid #ddd;margin-top:10px;box-sizing:border-box}
-.btn{background:#c62828;color:#fff;border:0;font-weight:700;text-align:center;text-decoration:none;display:block}
-.tools{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-top:10px}
-.tools button{padding:10px;border:0;border-radius:12px;background:#f1f1f1}
-.thumbs{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:12px}
-.thumbs img{width:100%;border-radius:16px;border:3px solid transparent;cursor:pointer}
+
+/* ===== STAGE ===== */
+.stage{
+  position:relative;
+  aspect-ratio:1/1;
+  border-radius:50%;
+  overflow:hidden;
+  background:#eee;
+}
+
+/* ẢNH */
+.photo{
+  position:absolute;
+  inset:0;
+  width:100%;
+  height:100%;
+  object-fit:cover;
+  z-index:1;
+  transition:.2s;
+}
+
+/* VIỀN */
+.frame{
+  position:absolute;
+  inset:0;
+  width:100%;
+  height:100%;
+  z-index:2;
+  pointer-events:none;
+}
+
+/* UI */
+.btn,input{
+  width:100%;
+  padding:12px;
+  border-radius:14px;
+  border:1px solid #ddd;
+  margin-top:10px;
+  box-sizing:border-box;
+}
+
+.btn{
+  background:#c62828;
+  color:#fff;
+  border:0;
+  font-weight:700;
+  text-align:center;
+  text-decoration:none;
+  display:block;
+}
+
+.tools{
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:8px;
+  margin-top:10px;
+}
+
+.tools button{
+  padding:10px;
+  border:0;
+  border-radius:12px;
+  background:#f1f1f1;
+}
+
+.thumbs{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:10px;
+  margin-top:12px;
+}
+
+.thumbs img{
+  width:100%;
+  border-radius:16px;
+  border:3px solid transparent;
+  cursor:pointer;
+}
+
 .thumbs img.active{border-color:#c62828}
-@media(max-width:900px){.grid{grid-template-columns:1fr}}
+
+@media(max-width:900px){
+  .grid{grid-template-columns:1fr}
+}
 </style>
 </head>
+
 <body>
 
 <div class="wrap">
@@ -36,11 +120,16 @@ h1{margin:0;color:#c62828}
 
 <div class="grid">
 
+<!-- STAGE -->
 <div class="panel">
 
 <div class="stage">
-<img id="photo" class="photo" src="https://via.placeholder.com/1000x1000?text=Upload+Image">
-<img id="frame" class="frame" src="file_0000000005e871fa84a59ba21bbea298">
+<img id="photo" class="photo"
+src="https://via.placeholder.com/1000x1000?text=Upload+Image">
+
+<!-- FIX: đảm bảo file có đuôi ảnh -->
+<img id="frame" class="frame"
+src="file_0000000005e871fa84a59ba21bbea298.png">
 </div>
 
 <div class="tools">
@@ -51,11 +140,12 @@ h1{margin:0;color:#c62828}
 <button onclick="zoom(0.1)">＋</button>
 <button onclick="zoom(-0.1)">－</button>
 <button onclick="resetImg()">⟳</button>
-<button onclick="downloadImg()">Download</button>
+<button onclick="downloadImg(event)">Download</button>
 </div>
 
 </div>
 
+<!-- PANEL -->
 <div class="panel">
 
 <label class="btn" for="file">📁 Chọn ảnh</label>
@@ -64,12 +154,16 @@ h1{margin:0;color:#c62828}
 <p>Chọn mẫu viền:</p>
 
 <div class="thumbs">
-<img src="file_00000000ab9071faa27ae63e13a66f2b.png" class="active" onclick="setFrame(this.src,this)">
-<img src="file_00000000b3c071fab4a72f3a974ade4e.png" onclick="setFrame(this.src,this)">
+<img src="9733-removebg-preview.png"
+class="active"
+onclick="setFrame(this.src,this)">
+
+<img src="9734-removebg-preview.png"
+onclick="setFrame(this.src,this)">
 </div>
 
 <p style="margin-top:14px">
-<a href="mailto:thekingmebear@gmail.com" class="btn">Trần Kiên Trinh</a>
+<a href="#" class="btn">Trần Kiên Trinh</a>
 </p>
 
 </div>
@@ -77,20 +171,23 @@ h1{margin:0;color:#c62828}
 </div>
 </div>
 
+<!-- FIX: load trước -->
+<script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
+
 <script>
 let x=0,y=0,s=1;
 const photo=document.getElementById('photo');
 
-file.onchange=e=>photo.src=URL.createObjectURL(e.target.files[0]);
+file.onchange=e=>{
+photo.src=URL.createObjectURL(e.target.files[0]);
+};
 
 function draw(){
 photo.style.transform=`translate(${x}px,${y}px) scale(${s})`;
 }
 
 function move(a,b){
-x+=a;
-y+=b;
-draw();
+x+=a;y+=b;draw();
 }
 
 function zoom(v){
@@ -99,43 +196,46 @@ draw();
 }
 
 function resetImg(){
-x=0;y=0;s=1;
-draw();
+x=0;y=0;s=1;draw();
 }
 
 function setFrame(src,el){
 frame.src=src;
-document.querySelectorAll('.thumbs img').forEach(i=>i.classList.remove('active'));
+document.querySelectorAll('.thumbs img')
+.forEach(i=>i.classList.remove('active'));
 el.classList.add('active');
 }
 
-function downloadImg(){
-const btn=event.target;
+function downloadImg(e){
+const btn=e.target;
 const old=btn.innerHTML;
+
 btn.innerHTML='⏳ Đang tạo ảnh...';
 btn.disabled=true;
 
 const stage=document.querySelector('.stage');
 
-html2canvas(stage,{backgroundColor:null,useCORS:true,scale:2}).then(canvas=>{
+html2canvas(stage,{
+backgroundColor:null,
+useCORS:true,
+scale:2
+}).then(canvas=>{
 const a=document.createElement('a');
 a.href=canvas.toDataURL('image/png');
-a.download='vien-giai-phong-30-4.png';
+a.download='vien-30-4.png';
 a.click();
 
-btn.innerHTML='✅ Đã tải xong';
+btn.innerHTML='✅ Xong';
 
 setTimeout(()=>{
 btn.innerHTML=old;
 btn.disabled=false;
-},1800);
+},1500);
 });
 }
 
 draw();
 </script>
 
-<script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
-
 </body>
-                                                                       </html>
+</html>
